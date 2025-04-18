@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Análisis de Inventario</h1>
+
+    <div class="row mt-4 mb-4">
+        <div class="col-md-6">
+            <h2>Productos con Bajo Stock</h2>
+            <div id="low-stock-chart" style="max-width: 400px;">
+                </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Stock Actual</th>
+                        <th>Stock Mínimo</th>
+                    </tr>
+                </thead>
+                <tbody id="low-stock-table-body">
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row mt-4 mb-4">
+        <div class="col-md-6">
+            <h2>Productos Más Vendidos</h2>            
+            <div id="most-sold-chart"></div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad Vendida</th>
+                    </tr>
+                </thead>
+                <tbody id="most-sold-table-body">
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row mt-4 mb-4">
+        <div class="col-md-6">
+            <h2>Productos de Baja Demanda</h2>            
+            <div id="low-demand-chart"></div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad Vendida</th>
+                    </tr>
+                </thead>
+                <tbody id="low-demand-table-body">
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx_low_stock = document.getElementById('low-stock-chart');
+    const ctx_most_sold = document.getElementById('most-sold-chart');
+    const ctx_low_demand = document.getElementById('low-demand-chart');
+
+    function setBasicChart(ctx, type, data, options){
+        new Chart(ctx, {
+            type: type,
+            data: data,
+            options: options
+        });
+    }
+
+    function setLowStock(data){
+        const labels = data.map(item=>item.product_name);
+        const stockData = data.map(item=>item.current_stock);
+        const minStockData = data.map(item=>item.min_stock);
+        const low_stock_data = {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Stock Actual',
+                    data: stockData,
+                    borderWidth: 1
+                },
+                {
+                    label: 'Stock Minimo',
+                    data: minStockData,
+                    borderWidth: 1
+                }
+            ]
+        };
+        setBasicChart(ctx_low_stock, "bar", low_stock_data, {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            });
+        let low_stock_table_body = document.getElementById('low-stock-table-body');
+        data.forEach(item => {
+            let row = low_stock_table_body.insertRow();
+            let cell1 = row.insertCell();
+            let cell2 = row.insertCell();
+            let cell3 = row.insertCell();
+            cell1.textContent = item.product_name;
+            cell2.textContent = item.current_stock;
+            cell3.textContent = item.min_stock;
+        });
+    }
+
+    function setMostSold(data){
+        const labels = data.map(item=>item.product_name);
+        const soldData = data.map(item=>item.quantity_sold);
+        const most_sold_data = {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Cantidad Vendida',
+                    data: soldData,
+                    borderWidth: 1
+                }
+            ]
+        };
+        setBasicChart(ctx_most_sold, "pie", most_sold_data, {});
+        let most_sold_table_body = document.getElementById('most-sold-table-body');
+        data.forEach(item => {
+            let row = most_sold_table_body.insertRow();
+            let cell1 = row.insertCell();
+            let cell2 = row.insertCell();
+            cell1.textContent = item.product_name;
+            cell2.textContent = item.quantity_sold;
+        });
+    }
+
+    function setLowDemand(data){
+        const labels = data.map(item=>item.product_name);
+        const soldData = data.map(item=>item.quantity_sold);
+        const low_demand_data = {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Cantidad Vendida',
+                    data: soldData,
+                    borderWidth: 1
+                }
+            ]
+        };
+        setBasicChart(ctx_low_demand, "polarArea", low_demand_data, {});
+        let low_demand_table_body = document.getElementById('low-demand-table-body');
+        data.forEach(item => {
+            let row = low_demand_table_body.insertRow();
+            let cell1 = row.insertCell();
+            let cell2 = row.insertCell();
+            cell1.textContent = item.product_name;
+            cell2.textContent = item.quantity_sold;
+        });
+    }
+
+    function getData(){
+        fetch('/get_analytics')
+        .then(response => response.json())
+        .then(data => {
+            setLowStock(data.low_stock);
+            setMostSold(data.most_sold);
+            setLowDemand(data.low_demand);
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    getData();
+</script>
+{% endblock %}

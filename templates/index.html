@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="jumbotron">
+                <h1 class="display-4">Welcome to Your Inventory and POS App</h1>
+                <p class="lead">Manage your inventory, track sales, and analyze your business with ease.</p>
+                <hr class="my-4">
+                <p>Get started today!</p>
+                <a class="btn btn-primary btn-lg" href="/register" role="button">Register</a>
+                <a class="btn btn-secondary btn-lg" href="/login" role="button">Login</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Inventory Management</h2>
+            <p>Keep track of your products, stock levels, and more.</p>
+        </div>
+        <div class="col-md-4">
+            <h2>POS System</h2>
+            <p>Easily process sales with our intuitive point-of-sale system.</p>
+        </div>
+        <div class="col-md-4">
+            <h2>Business Analytics</h2>
+            <p>Gain insights into your business with detailed reports and charts.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Point of Sale</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <label for="barcode">Barcode:</label>
+            <input type="text" id="barcode" name="barcode" class="form-control" autofocus>
+        </div>
+        <div class="col-md-6">
+            <button id="start-camera" class="btn btn-success mt-4">Start Camera</button>
+            <video id="preview" class="d-none"></video>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <h2>Cart</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Product Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody id="cart-items">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Total: $<span id="total-price">0.00</span></h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <button class="btn btn-primary" id="checkout-btn">Checkout</button>
+        </div>
+        <div class="col-md-6">
+            <button class="btn btn-secondary" id="clear-cart-btn">Clear Cart</button>
+        </div>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='scripts.js') }}"></script>
+<script>
+    document.getElementById('barcode').addEventListener('keypress', function (event) {
+        if (event.key === 'Enter') {            
+            event.preventDefault()
+            fetch('/pos', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `barcode=${this.value}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const cartItems = document.getElementById('cart-items');
+                cartItems.innerHTML = ''; // Clear existing cart items
+                data.cart.forEach(item => {
+                    const row = `<tr><td><img src="${item.image || '/static/uploads/placeholder.png'}" alt="Product Image" style="width: 50px; height: 50px;"></td><td>${item.name}</td><td>${item.price}</td><td>${item.quantity}</td></tr>`;
+                    cartItems.innerHTML += row;
+                });
+                document.getElementById('total-price').textContent = data.total;
+            } else {
+                alert('Product not found!');
+            }
+        });
+        }   
+    });
+    document.getElementById('clear-cart-btn').addEventListener('click', function() {
+        document.getElementById('cart-items').innerHTML = '';
+        document.getElementById('total-price').textContent = '0.00';
+    });
+</script>
+{% endblock %}

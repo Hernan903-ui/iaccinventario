@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Inventory & POS{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="/" class="navbar-logo">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
+            </a>
+            <ul class="navbar-menu">
+                <li class="navbar-item">
+                    <a href="/products" class="navbar-link">Products</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="/inventory" class="navbar-link">Inventory</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="/pos" class="navbar-link">POS</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="/analysis" class="navbar-link">Analysis</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="/suppliers" class="navbar-link">Suppliers</a>
+                </li>
+                <li class="navbar-item"><a href="/login" class="navbar-link">Login</a></li>
+                <li class="navbar-item"><a href="/register" class="navbar-link">Register</a></li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+    <script src="{{ url_for('static', filename='analytics.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,266 @@
+/* Modern CSS Stylesheet with Dark Theme and Consistent Design */
+
+/* Color Palette */
+:root {
+    --primary-color: #ff6600; /* Vibrant orange */
+    --secondary-color: #333; /* Dark gray */
+    --background-color: #1e1e1e; /* Dark background */
+    --text-color: #d4d4d4; /* Light gray text */
+    --highlight-color: #f0f0f0; /* Light gray highlight */
+    --form-background: #252526;
+    --success-color: #4CAF50;
+    --error-color: #f2dede;
+    --hover-color: #cc5200;
+    --border-color: #555;
+    --footer-color: #252526;
+}
+
+/* General Styles */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+a {
+    color: var(--highlight-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.container {
+    padding: 0 20px;
+    width: 80%;
+    max-width: 1200px; /* Limit maximum width */
+    margin: auto;
+    overflow: hidden;
+}
+
+header {
+    background: var(--form-background);
+    padding: 10px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Logo styles */
+
+header a {
+    color: var(--highlight-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+header #branding {
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Navigation styles */
+header nav {
+    float: right;
+    margin-top: 10px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+nav ul li {
+    margin: 0 10px;
+}
+
+nav ul li a {
+    display: block;
+    padding: 10px 15px;
+    border-radius: 4px;
+}
+
+nav ul li a:hover {
+    background: var(--secondary-color);
+}
+
+/* Forms */
+form {
+    padding: 20px;
+    background: var(--form-background);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Form Elements */
+
+form label {
+    display: block;
+    margin-bottom: 8px;
+    color: #f0f0f0;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form input[type="number"] {
+    width: calc(100% - 20px); /* Adjust width for padding */
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: var(--secondary-color);
+    color: var(--highlight-color);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    box-sizing: border-box;
+    outline: none;
+}
+
+/* Buttons */
+
+form button, .button {
+    background: var(--primary-color);
+    color: var(--highlight-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, color 0.3s ease;
+}
+
+form button:hover, .button:hover {
+    background: var(--hover-color);
+}
+
+/* Tables */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    border-bottom: 1px solid var(--border-color);
+}
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+th {
+    background-color: var(--secondary-color);
+    color: var(--highlight-color);
+    font-weight: bold;
+}
+tr:hover {
+    background-color: #333;
+    transition: background-color 0.3s ease;
+}
+
+/* Messages */
+
+.flash-container {
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+.message {
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards, fadeOut 0.5s 3s forwards;
+}
+
+.success {
+    background-color: var(--success-color);
+    color: #fff;
+    border: none;
+}
+.required{
+    color: red;
+    font-weight: bold;
+}
+
+.success.show, .error.show{
+    opacity: 1;
+}
+
+
+
+.error {
+    border: none;
+    background-color: #f2dede;
+    color: #a94442;
+    border-color: #ebccd1;
+}
+
+
+/* POS */
+.pos-container {
+    display: flex;
+    gap: 30px;
+}
+
+.pos-products,
+.pos-cart {
+    flex: 1;
+    background: #252526;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    overflow: auto;
+}
+
+.product-item {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: var(--secondary-color);
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.button {
+    padding: 10px 15px;
+    border-radius: 4px;
+}
+/* Navigation */
+
+header nav ul li a:hover {
+    background: var(--secondary-color);
+}
+
+header .highlight,
+header .current a {
+    color: var(--primary-color); /* Vibrant orange highlight */
+}
+
+/* Footer */
+footer {
+    padding: 20px;
+    border-top: 1px solid var(--border-color);
+    margin-top: 30px;
+    color: var(--highlight-color);
+    background-color: var(--footer-color);
+    text-align: center;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+

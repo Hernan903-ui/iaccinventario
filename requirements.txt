@@ -1,0 +1,11 @@
+pip
+autopep8
+Flask
+flask_sqlalchemy
+#psycopg2-binary==2.9.9
+gunicorn
+Werkzeug
+pyzbar # Barcode reader
+reportlab #PDF generation
+python-barcode
+pymysql
